@@ -1,0 +1,178 @@
+body {
+	font-family: Arial, sans-serif;
+	background-color: #f0f8ff;
+	margin: 0;
+	padding: 0;
+}
+
+.container {
+	max-width: 800px;
+	width: 80vw;
+	background-color: #fff;
+	margin: 20px auto;
+	padding: 20px;
+	border-radius: 8px;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+	text-align: center;
+	display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+	gap: 12px;
+}
+
+h1 {
+	font-size: 24px;
+	margin: 10px 0;
+}
+
+p {
+	font-size: 18px;
+	color: #555;
+}
+
+img {
+	max-width: 80%;
+	width: 250px;
+    height: 340px;
+	object-fit: cover;
+	border-radius: 8px;
+}
+
+button {
+	background-color: #4682b4;
+	color: white;
+	border: none;
+	padding: 10px 20px;
+	cursor: pointer;
+	font-size: 16px;
+}
+
+button:hover {
+	background-color: #0056b3;
+}
+
+.btn-outline-success {
+    color: #4682b4;
+    border-color: #4682b4;
+}
+
+.btn-outline-success:hover {
+    background-color: #4682b4;
+    border-color: #4682b4;
+}
+
+#popup {
+	display: none;
+	position: fixed;
+	top: 80px;
+	right: 20px;
+	padding: 10px 20px;
+	background: #28a745;
+	color: #fff;
+	border-radius: 5px;
+	z-index: 1000;
+}
+
+@media screen and (min-width: 992px) {
+    .openbtn {
+        display: none;
+    }
+
+    #mySidebar {
+        display: none;
+    }
+}
+
+
+@media screen and (max-width: 991px) {
+    .navbar-expand-lg .navbar-collapse {
+        display: none;
+    }
+
+    .navbar-nav {
+        text-align: center;
+        width: 100%;
+    }
+
+    .navbar-nav .nav-item {
+        float: none;
+        display: inline-block;
+    }
+
+    .navbar-nav .nav-link {
+        padding: 10px 0;
+    }
+
+    .sidebar {
+        display: flex;
+        height: 100%;
+        width: 0;
+        position: fixed;
+        top: 0;
+        right: 0;
+        background-color: #f4f4f4;
+        overflow-x: hidden;
+        transition: 0.3s;
+        padding-top: 60px;
+        text-align: center;
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .sidebar a {
+        padding: 10px 15px;
+        text-decoration: none;
+        font-size: 18px;
+        color: #333;
+        display: block;
+        transition: 0.3s;
+    }
+    
+    .sidebar a:hover {
+        color: #007bff;
+    }
+    
+    .sidebar form {
+        text-align: center;
+    }
+    
+    .sidebar .closebtn {
+        position: absolute;
+        top: 0;
+        right: 25px;
+        font-size: 36px;
+        margin-left: 50px;
+    }
+    
+    .form-inline {
+        justify-content: center;
+        gap: 20px;
+    }
+
+    .form-control {
+        width: 85%;
+    }
+    
+    .openbtn {
+        font-size: 20px;
+        cursor: pointer;
+        background-color: #333;
+        color: white;
+        padding: 10px 15px;
+        border: none;
+		border-radius: 5px;
+    }
+    
+    .openbtn:hover {
+        background-color: #444;
+    }
+}
+
+@media screen and (max-width: 678px) {
+	#popup {
+		top: 50px;
+		right: 50%;
+		transform: translateX(50%);
+	}
+}

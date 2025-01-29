@@ -1,0 +1,155 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/book_detail.css' %}">
+    <script>
+        function showPopup(message) {
+            var popup = document.getElementById('popup');
+            if (popup) {
+                popup.innerText = message;
+                popup.style.display = 'block';
+                setTimeout(function () {
+                    popup.style.display = 'none';
+                }, 3000);
+            }
+        }
+
+        function handleFormSubmit(event, message) {
+            event.preventDefault();
+            var form = event.target;
+            var formData = new FormData(form);
+
+            fetch(form.action, {
+                method: form.method,
+                body: formData
+            }).then(response => {
+                if (response.ok) {
+                    showPopup(message);
+                } else {
+                    showPopup('エラーが発生しました。');
+                }
+            }).catch(error => {
+                console.error('Error:', error);
+                showPopup('エラーが発生しました。');
+            });
+        }
+    </script>
+</head>
+
+<body>
+    {% block content %}
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <a class="navbar-brand" href="{% url 'index' %}">My Shop</a>
+            <button class="openbtn" onclick="openNav()">&#9776;</button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ml-auto">
+                    {% if user.is_authenticated %}
+                    <li class="nav-item"><a class="nav-link" href="{% url 'cart_detail' %}">Cart</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'my_page' %}">My Page</a></li>
+                    <li class="nav-item">
+                        <form class="form-inline my-2 my-lg-0" method="GET" action="{% url 'search' %}">
+                            <input class="form-control mr-sm-2" type="search" placeholder="Search" name="q"
+                                aria-label="Search">
+                            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                        </form>
+                    </li>
+                    {% else %}
+                    <li class="nav-item"><a class="nav-link" href="{% url 'login' %}">Login</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'signup' %}">Sign Up</a></li>
+                    <li class="nav-item">
+                        <form class="form-inline my-2 my-lg-0" method="GET" action="{% url 'search' %}">
+                            <input class="form-control mr-sm-2" type="search" placeholder="Search" name="q"
+                                aria-label="Search">
+                            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                        </form>
+                    </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <div id="popup"></div>
+
+    <div id="mySidebar" class="sidebar">
+        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+        <a href="{% url 'index' %}">Home</a>
+        <a href="{% url 'cart_detail' %}">Cart</a>
+        <a href="{% url 'my_page' %}">My Page</a>
+        <form class="form-inline my-2 my-lg-0" method="GET" action="{% url 'search' %}">
+            <input class="form-control mr-sm-2" type="search" placeholder="Search" name="q" aria-label="Search">
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+        </form>
+    </div>
+    <div class="container">
+        <h1>{{ book.title }}</h1>
+        <div>
+            <p><strong>Author:</strong> {{ book.author }}</p>
+            <p><strong>Price:</strong> {{ book.price }}円</p>
+            <p><strong>Publisher:</strong>{{ book.publisher }}</p>
+        </div>
+        {% if book.image %}
+        <img src="{{ book.image.url }}" alt="{{ book.title }}">
+        {% else %}
+        <img src="{% static 'img/book_list/' %}{{ book.image_name }}" alt="{{ book.title }}">
+        {% endif %}
+
+        <form id="cart_form" action="{% url 'add_to_cart' book.id %}" method="post"
+            onsubmit="handleFormSubmit(event, 'カートに登録しました！')">
+            {% csrf_token %}
+            <button type="submit">カートに追加する</button>
+        </form>
+
+        {% if is_favorite %}
+        <button type="button" onclick="showPopup('お気に入りにすでに登録されています！')">お気に入り登録</button>
+        {% else %}
+        <form id="favorite_form" action="{% url 'add_to_favorite' book.id %}" method="post"
+            onsubmit="handleFormSubmit(event, 'お気に入りに登録しました！')">
+            {% csrf_token %}
+            <button type="submit">お気に入り登録</button>
+        </form>
+        {% endif %}
+    </div>
+    {% endblock %}
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script>
+        function openNav() {
+            var sidebar = document.getElementById("mySidebar");
+            if (sidebar) {
+                sidebar.style.width = "250px";
+            }
+        }
+
+        function closeNav() {
+            var sidebar = document.getElementById("mySidebar");
+            if (sidebar) {
+                sidebar.style.width = "0";
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', function () {
+            var logoutForm = document.getElementById('logout-form');
+            if (logoutForm) {
+                logoutForm.addEventListener('submit', function (event) {
+                    if (!confirm('本当にログアウトしますか？')) {
+                        event.preventDefault();
+                    }
+                });
+            }
+
+            var openButton = document.querySelector('.openbtn');
+            if (openButton) {
+                openButton.addEventListener('click', openNav);
+            }
+        });
+    </script>
+</body>
+
+</html>

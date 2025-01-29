@@ -1,0 +1,117 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/cart.css' %}">
+    <script>
+        function confirmRemove() {
+            return confirm('カートからこのアイテムを削除しますか？');
+        }
+
+        function openNav() {
+            document.getElementById("mySidebar").style.width = "250px";
+        }
+
+        function closeNav() {
+            document.getElementById("mySidebar").style.width = "0";
+        }
+
+        document.getElementById('logout-form').addEventListener('submit', function(event) {
+            if (!confirm('本当にログアウトしますか？')) {
+                event.preventDefault();
+            }
+        });
+    </script>
+</head>
+
+<body>
+    {% block content %}
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <a class="navbar-brand" href="{% url 'index' %}">My Shop</a>
+            <button class="openbtn" onclick="openNav()">&#9776;</button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ml-auto">
+                    {% if user.is_authenticated %}
+                        <li class="nav-item"><a class="nav-link" href="{% url 'cart_detail' %}">Cart</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{% url 'my_page' %}">My Page</a></li>
+                        <li class="nav-item">
+                            <form class="form-inline my-2 my-lg-0" method="GET" action="{% url 'search' %}">
+                                <input class="form-control mr-sm-2" type="search" placeholder="Search" name="q" aria-label="Search">
+                                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                            </form>
+                        </li>
+                    {% else %}
+                        <li class="nav-item"><a class="nav-link" href="{% url 'login' %}">Login</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{% url 'signup' %}">Sign Up</a></li>
+                        <li class="nav-item">
+                            <form class="form-inline my-2 my-lg-0" method="GET" action="{% url 'search' %}">
+                                <input class="form-control mr-sm-2" type="search" placeholder="Search" name="q" aria-label="Search">
+                                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                            </form>
+                        </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </nav>
+    </header>
+    <div id="mySidebar" class="sidebar">
+        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+        <a href="{% url 'index' %}">Home</a>
+        <a href="{% url 'cart_detail' %}">Cart</a>
+        <a href="{% url 'my_page' %}">My Page</a>
+        <form class="form-inline my-2 my-lg-0" method="GET" action="{% url 'search' %}">
+            <input class="form-control mr-sm-2" type="search" placeholder="Search" name="q" aria-label="Search">
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+        </form>
+    </div>
+    <div class="container">
+        <h1>Your Cart</h1>
+        {% if cart.books.all %}
+        <div class="cart-summary">
+            <p><strong>Total Items:</strong> {{ cart.books.all|length }} 点</p>
+            <p><strong>Total Price:</strong> {{ cart.total_price }} 円</p>
+        </div>
+        <ul class="cart-items favorites-list">
+            {% for book in cart.books.all %}
+            <li>
+                <div class="img_none" style="text-align: center;">
+                    {% if book.image_name %}
+                    <img src="{% static 'img/book_list/' %}{{ book.image_name }}" alt="{{ book.title }}">
+                    {% else %}
+                    <img src="{% static 'img/book_list/default.jpg' %}" alt="{{ book.title }}">
+                    {% endif %}
+                    <span>{{ book.title }}（{{ book.volume_number }}）- {{ book.price }}円</span>
+                </div>
+                <!-- ここから -->
+                {% if book.image_name %}
+                <img class="none_img" src="{% static 'img/book_list/' %}{{ book.image_name }}" alt="{{ book.title }}">
+                {% else %}
+                <img class="none_img" src="{% static 'img/book_list/default.jpg' %}" alt="{{ book.title }}">
+                {% endif %}
+                <span class="none_img" >{{ book.title }}（{{ book.volume_number }}）- {{ book.price }}円</span>
+                <!-- ここまで -->
+                <form method="post" action="{% url 'remove_from_cart' book.id %}" onsubmit="return confirmRemove();">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-danger"><img class="dust_box" src="{% static 'img/sdesign_00175.png' %}" alt=""></button>
+                </form>
+            </li>
+            {% empty %}
+            <li>カートにアイテムがありません</li>
+            {% endfor %}
+        </ul>
+        {% else %}
+        <p>カートにアイテムがありません</p>
+        {% endif %}
+    </div>
+    {% endblock %}
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</body>
+
+</html>

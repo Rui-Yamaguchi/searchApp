@@ -1,0 +1,28 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <h1 class="text-center">Login</h1>
+        <form method="post" class="mt-4">
+            {% csrf_token %}
+            {{ form.non_field_errors }}
+            <div class="form-group">
+                <label for="id_username">ユーザー名</label>
+                {{ form.username }}
+                {{ form.username.errors }}
+            </div>
+            <div class="form-group">
+                <label for="id_password">パスワード</label>
+                {{ form.password }}
+                {{ form.password.errors }}
+            </div>
+            <button type="submit" class="btn btn-primary btn-block">ログイン</button>
+        </form>
+        <div class="sign_form" style="text-align: center; margin-top: 30px;">
+            <p class="text-center mt-3">アカウントをお持ちでないですか？</p>
+            <a href="{% url 'signup' %}">サインアップはこちら</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,108 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    {% load static %}
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/mypage.css' %}">
+    <script>
+        function confirmRemove() {
+            return confirm('この本をお気に入りから削除しますか？');
+        }
+    </script>
+</head>
+
+<body>
+    {% block content %}
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <a class="navbar-brand" href="{% url 'index' %}">My Shop</a>
+            <button class="openbtn" onclick="openNav()">&#9776;</button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ml-auto">
+                    {% if user.is_authenticated %}
+                    <li class="nav-item"><a class="nav-link" href="{% url 'cart_detail' %}">Cart</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'my_page' %}">My Page</a></li>
+                    <li class="nav-item">
+                        <form class="form-inline my-2 my-lg-0" method="GET" action="{% url 'search' %}">
+                            <input class="form-control mr-sm-2" type="search" placeholder="Search" name="q"
+                                aria-label="Search">
+                            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                        </form>
+                    </li>
+                    {% else %}
+                    <li class="nav-item"><a class="nav-link" href="{% url 'login' %}">Login</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'signup' %}">Sign Up</a></li>
+                    <li class="nav-item">
+                        <form class="form-inline my-2 my-lg-0" method="GET" action="{% url 'search' %}">
+                            <input class="form-control mr-sm-2" type="search" placeholder="Search" name="q"
+                                aria-label="Search">
+                            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                        </form>
+                    </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </nav>
+    </header>
+    <div id="mySidebar" class="sidebar">
+        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+        <a href="{% url 'index' %}">Home</a>
+        <a href="{% url 'cart_detail' %}">Cart</a>
+        <a href="{% url 'my_page' %}">My Page</a>
+        <form class="form-inline my-2 my-lg-0" method="GET" action="{% url 'search' %}">
+            <input class="form-control mr-sm-2" type="search" placeholder="Search" name="q" aria-label="Search">
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+        </form>
+    </div>
+    <div class="container">
+        <h1>My Page</h1>
+        <p><strong>Email:</strong> {{ user.email }}</p>
+        <p><strong>Username:</strong> {{ user.username }}</p>
+
+        <h2>お気に入りリスト</h2>
+        <ul class="favorites-list">
+            {% for favorite in favorites %}
+            <li>
+                {% if favorite.book.image_name %}
+                <img src="{% static 'img/book_list/' %}{{ favorite.book.image_name }}" alt="{{ favorite.book.title }}">
+                {% else %}
+                <img src="{% static 'img/book_list/default.jpg' %}" alt="{{ favorite.book.title }}">
+                {% endif %}
+                <span>{{ favorite.book.title }} by {{ favorite.book.author }}</span>
+                <form method="post" action="{% url 'remove_from_favorite' favorite.book.id %}"
+                    onsubmit="return confirmRemove();" style="margin-top: 10px;">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-danger">Delete</button>
+                </form>
+            </li>
+            {% empty %}
+            <li>お気に入りの本はありません</li>
+            {% endfor %}
+        </ul>
+    </div>
+    {% endblock %}
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script>
+        function openNav() {
+            document.getElementById("mySidebar").style.width = "250px";
+        }
+
+        function closeNav() {
+            document.getElementById("mySidebar").style.width = "0";
+        }
+
+        document.getElementById('logout-form').addEventListener('submit', function (event) {
+            if (!confirm('本当にログアウトしますか？')) {
+                event.preventDefault();
+            }
+        });
+    </script>
+</body>
+
+</html>

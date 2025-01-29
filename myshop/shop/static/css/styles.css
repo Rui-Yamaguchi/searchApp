@@ -1,0 +1,201 @@
+body {
+    background-color: #f0f8ff;
+    color: #333;
+}
+
+h1 {
+    text-align: center;
+    color: #6a5acd;
+}
+
+a {
+    color: #4682b4;
+}
+
+.form-group {
+    display: flex;
+    margin-bottom: 1rem;
+    flex-direction: column;
+}
+
+.form-group label {
+    font-weight: bold;
+}
+.form-group input {
+    padding: 10px;
+    font-size: 1rem;
+}
+.btn-block {
+    padding: 10px;
+    font-size: 1.25rem;
+}
+.mt-4 {
+    margin-top: 1.5rem;
+}
+.mt-3 {
+    margin-top: 1rem;
+}
+
+.btn-outline-success {
+    color: #4682b4;
+    border-color: #4682b4;
+}
+
+.btn-outline-success:hover {
+    background-color: #4682b4;
+    border-color: #4682b4;
+}
+
+.btn-primary {
+    background-color: #4682b4;
+    border-color: #4682b4;
+    margin-top: 5rem;
+}
+
+.btn-primary:hover {
+    background-color: #4682b4;
+    border-color: #4682b4;
+}
+
+.book-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    justify-content: center;
+}
+
+.book-item {
+    background-color: #e0e0e0;
+    border-radius: 8px;
+    padding: 16px;
+    width: 150px;
+    height: 250px; /* 高さを固定 */
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+}
+
+.book-item img {
+    max-width: 100%;
+    height: 70%;
+    border-radius: 8px;
+    object-fit: cover;
+}
+
+.book-item span {
+    margin-top: 8px;
+    font-size: 16px;
+    font-weight: bold;
+    overflow: hidden; /* テキストのオーバーフロー処理 */
+    text-overflow: ellipsis; /* 長すぎるテキストを省略記号に変換 */
+    display: -webkit-box;
+    -webkit-line-clamp: 2; /* テキストの表示行数を設定 */
+    -webkit-box-orient: vertical;
+    white-space: normal; /* テキストを折り返す */
+}
+
+.alert-danger {
+    background-color: transparent;
+    border-color: transparent;
+}
+
+.errorlist {
+    list-style: none;
+    padding-left: 0;
+}
+
+@media screen and (min-width: 992px) {
+    .openbtn {
+        display: none;
+    }
+
+    #mySidebar {
+        display: none;
+    }
+}
+
+
+@media screen and (max-width: 991px) {
+    .navbar-expand-lg .navbar-collapse {
+        display: none;
+    }
+
+    .navbar-nav {
+        text-align: center;
+        width: 100%;
+    }
+
+    .navbar-nav .nav-item {
+        float: none;
+        display: inline-block;
+    }
+
+    .navbar-nav .nav-link {
+        padding: 10px 0;
+    }
+
+    .sidebar {
+        display: flex;
+        height: 100%;
+        width: 0;
+        position: fixed;
+        top: 0;
+        right: 0;
+        z-index: 5;
+        background-color: #f4f4f4;
+        overflow-x: hidden;
+        transition: 0.3s;
+        padding-top: 60px;
+        text-align: center;
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .sidebar a {
+        padding: 10px 15px;
+        text-decoration: none;
+        font-size: 18px;
+        color: #333;
+        display: block;
+        transition: 0.3s;
+    }
+    
+    .sidebar a:hover {
+        color: #007bff;
+    }
+    
+    .sidebar form {
+        text-align: center;
+    }
+    
+    .sidebar .closebtn {
+        position: absolute;
+        top: 0;
+        right: 25px;
+        font-size: 36px;
+        margin-left: 50px;
+    }
+    
+    .form-inline {
+        justify-content: center;
+        gap: 20px;
+    }
+
+    .form-control {
+        width: 85%;
+    }
+    
+    .openbtn {
+        font-size: 20px;
+        cursor: pointer;
+        background-color: #333;
+        color: white;
+        padding: 10px 15px;
+        border: none;
+        border-radius: 5px;
+    }
+    
+    .openbtn:hover {
+        background-color: #444;
+    }
+}

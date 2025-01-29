@@ -1,0 +1,16 @@
+{% extends "base_generic.html" %}
+{% load static %}
+
+{% block content %}
+<h1>Book List</h1>
+<div class="book-grid">
+    {% for book in books %}
+    <a href="{% url 'book_detail' book.id %}" style="display: block;">
+        <div class="book-item">
+            <img src="{% static 'img/book_list/' %}{{ book.image_name }}" alt="{{ book.title }}">
+            <span>{{ book.title }}</span>
+        </div>
+    </a>
+    {% endfor %}
+</div>
+{% endblock %}
