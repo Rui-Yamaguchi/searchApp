@@ -70,31 +70,23 @@
     </div>
     <div class="container">
         <h1>Your Cart</h1>
-        {% if cart.books.all %}
+        {% if cart.cart_books.all %}
         <div class="cart-summary">
-            <p><strong>Total Items:</strong> {{ cart.books.all|length }} 点</p>
+            <p><strong>Total Items:</strong> {{ cart.total_item_count }} 点</p>
             <p><strong>Total Price:</strong> {{ cart.total_price }} 円</p>
         </div>
         <ul class="cart-items favorites-list">
-            {% for book in cart.books.all %}
+            {% for cart_book in cart.cart_books.all %}
             <li>
                 <div class="img_none" style="text-align: center;">
-                    {% if book.image_name %}
-                    <img src="{% static 'img/book_list/' %}{{ book.image_name }}" alt="{{ book.title }}">
+                    {% if cart_book.book.image_name %}
+                    <img src="{% static 'img/book_list/' %}{{ cart_book.book.image_name }}" alt="{{ cart_book.book.title }}">
                     {% else %}
-                    <img src="{% static 'img/book_list/default.jpg' %}" alt="{{ book.title }}">
+                    <img src="{% static 'img/book_list/default.jpg' %}" alt="{{ cart_book.book.title }}">
                     {% endif %}
-                    <span>{{ book.title }}（{{ book.volume_number }}）- {{ book.price }}円</span>
+                    <span>{{ cart_book.book.title }}（{{ cart_book.book.volume_number }}）- {{ cart_book.book.price }}円 x {{ cart_book.quantity }}</span>
                 </div>
-                <!-- ここから -->
-                {% if book.image_name %}
-                <img class="none_img" src="{% static 'img/book_list/' %}{{ book.image_name }}" alt="{{ book.title }}">
-                {% else %}
-                <img class="none_img" src="{% static 'img/book_list/default.jpg' %}" alt="{{ book.title }}">
-                {% endif %}
-                <span class="none_img" >{{ book.title }}（{{ book.volume_number }}）- {{ book.price }}円</span>
-                <!-- ここまで -->
-                <form method="post" action="{% url 'remove_from_cart' book.id %}" onsubmit="return confirmRemove();">
+                <form method="post" action="{% url 'remove_from_cart' cart_book.book.id %}" onsubmit="return confirmRemove();">
                     {% csrf_token %}
                     <button type="submit" class="btn btn-danger"><img class="dust_box" src="{% static 'img/sdesign_00175.png' %}" alt=""></button>
                 </form>

@@ -16,12 +16,20 @@ class Book(models.Model):
 
 class Cart(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='carts')
-    books = models.ManyToManyField(Book, related_name='carts')
     created_at = models.DateTimeField(auto_now_add=True)
 
     @property
     def total_price(self):
-        return sum(book.price for book in self.books.all())
+        return sum(cart_book.book.price * cart_book.quantity for cart_book in self.cart_books.all())
+
+    @property
+    def total_item_count(self):
+        return sum(cart_book.quantity for cart_book in self.cart_books.all())
+
+class CartBook(models.Model):
+    cart = models.ForeignKey(Cart, related_name='cart_books', on_delete=models.CASCADE)
+    book = models.ForeignKey(Book, related_name='book_carts', on_delete=models.CASCADE)
+    quantity = models.PositiveIntegerField(default=1)
 
 class Favorite(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='favorites')
