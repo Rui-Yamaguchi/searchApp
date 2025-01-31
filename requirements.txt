@@ -15,5 +15,5 @@ psycopg2-binary==2.9.10
 requests==2.32.3
 setuptools==75.8.0
 sqlparse==0.5.3
-urllib3==2.3.0
+urllib3==1.26.16
 virtualenv==20.29.1
