@@ -221,6 +221,12 @@ h1 {
     .img_none {
         display: none;
     }
+
+    img.none_img {
+        height: 300px;
+        margin: 0;
+        margin-bottom: 10px;
+    }
     
     .cart-items {
         grid-template-columns: 1fr; /* 幅678px以下で1列に */
@@ -247,23 +253,20 @@ h1 {
     .favorites-list li {
         padding: 16px;
         display: flex;
-        flex-direction: column; /* 縦方向に配置 */
+        flex-direction: column;
         justify-content: space-between;
-        align-items: center; /* 中央揃えにする */
-        background-color: #e0e0e0; /* 背景色を設定 */
-        border-radius: 8px; /* 角丸を設定 */
+        align-items: center;
+        background-color: #e0e0e0;
+        border-radius: 8px;
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        width: 100%;
-        max-width: 220px; /* カードの最大幅を設定 */
         box-sizing: border-box;
     }
     
     .favorites-list img {
-        width: 100%; /* 画像の幅を親要素にフィット */
-        height: 70% !important; /* 画像の高さを固定 */
-        object-fit: cover; /* 画像を枠に収める */
-        margin-right: 0;
-        margin-bottom: 10px; /* 下部マージンを設定 */
+        width: 100%;
+        max-height: 300px;
+        object-fit: cover;
+        margin-bottom: 10px;
         border-radius: 4px;
     }
     

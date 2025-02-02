@@ -16,7 +16,7 @@ class Command(BaseCommand):
             {'title': 'ゴールデンカムイ', 'author': '野田サトル', 'price': 580, 'volume_number': 1, 'publisher': '集英社', 'image_name': 'go-rudennkamui.jpg'},
             {'title': '五等分の花嫁', 'author': '春場ねぎ', 'price': 450, 'volume_number': 1, 'publisher': '講談社', 'image_name': 'gotoubunnnohanayome.jpg'},
             {'title': 'ハイキュー!!', 'author': '古舘春一', 'price': 730, 'volume_number': 1, 'publisher': '集英社', 'image_name': 'haikyu-.jpg'},
-            {'title': 'ハンターハンター', 'author': '冨樫義博', 'price': 400, 'volume_number': 1, 'publisher': '集英社', 'image_name': 'hanta-hanta-.jpg'},
+            {'title': 'HUNTEER×HUNTEER', 'author': '冨樫義博', 'price': 400, 'volume_number': 1, 'publisher': '集英社', 'image_name': 'hanta-hanta-.jpg'},
             {'title': 'はたらく細胞', 'author': '清水茜', 'price': 600, 'volume_number': 1, 'publisher': '講談社', 'image_name': 'hatarakusaibou.jpg'},
             {'title': '賭ケグルイ', 'author': '河本ほむら', 'price': 580, 'volume_number': 1, 'publisher': 'スクウェア・エニックス', 'image_name': 'kakegurui.jpg'},
             {'title': 'からかい上手の高木さん', 'author': '山本崇一朗', 'price': 490, 'volume_number': 1, 'publisher': '小学館', 'image_name': 'karakaijozunotakagisan.jpg'},
